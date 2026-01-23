@@ -60,10 +60,13 @@ style = "Medium"
 history = 3000
 
 [terminal.shell]
-program = "/usr/bin/zsh"
+#program = "/usr/bin/zsh"
+program = "tmux"
+args = ["new-session", "-A", "-s", "default"]
+
 
 [window]
-decorations = "none"
+#decorations = "none"
 dynamic_title = true
 opacity = 1.0
 title = "Alacritty"

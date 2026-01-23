@@ -134,6 +134,7 @@ if [ -d "$DOTDIR" ]; then
   ln -sf "$DOTDIR/.Xresources" ~/.Xresources
   ln -sf "$DOTDIR/.zshrc" ~/.zshrc
   ln -sf "$DOTDIR/.p10k.zsh" ~/.p10k.zsh
+  ln -sf "$DOTDIR/.tmux.conf" ~/.tmux.conf
 else
   echo -e "${YELLOW}Dotfiles not found at $DOTDIR — skipping link.${RESET}"
 fi
