@@ -126,7 +126,6 @@ if [ -d "$DOTDIR" ]; then
   ln -s "$DOTDIR/.config/i3" ~/.config/i3
   ln -s "$DOTDIR/.config/polybar" ~/.config/polybar
   ln -s "$DOTDIR/.config/rofi" ~/.config/rofi
-  ln -s "$DOTDIR/.config/wezterm" ~/.config/wezterm
 
   ln -sf "$DOTDIR/.fonts" ~/.fonts
   ln -sf "$DOTDIR/.themes" ~/.themes
