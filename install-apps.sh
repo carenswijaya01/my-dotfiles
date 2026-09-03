@@ -81,6 +81,15 @@ EOF
 
 echo -e "${GREEN}>>> Postman installed and desktop entry created.${RESET}"
 
+echo -e "${CYAN}>>> Installing Flatpak applications...${RESET}"
+for app in org.telegram.desktop org.onlyoffice.desktopeditors org.mozilla.Thunderbird; do
+  if flatpak list --app --columns=application 2>/dev/null | grep -qx "$app"; then
+    echo -e "    ok (already installed): $app"
+  else
+    flatpak install -y flathub "$app"
+  fi
+done
+
 # --- Final message ---
 echo ""
 echo -e "${GREEN}✅ All requested apps have been processed.${RESET}"

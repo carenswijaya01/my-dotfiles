@@ -1,0 +1,177 @@
+# Sway config — ported 1:1 from carenswijaya01/dotfiles .config/i3/config
+# Wayland: polybar→waybar, launcher→fuzzel OneDark (rofi X11 tidak bisa ikut
+#          output aktif; rofi tetap dipakai utk wallpaper-selector yg butuh
+#          icon preview), feh→swaybg, flameshot→grim+slurp,
+#          fastcompmgr→built-in, xrdb→n/a, polkit-mate→lxpolkit
+# First login: `swaymsg -t get_outputs` → fix output names below.
+
+### Variables
+set $mod Mod4
+set $term alacritty
+set $menu fuzzel  # rofi X11: selalu muncul di monitor yang sama, fuzzel ikut output aktif
+
+### Font (same as i3)
+font pango:FiraCode Nerd Font 10
+
+### Colors (OneDark — copied from i3 config)
+# Class                  border  backgr  text     indicator child_border
+client.focused           #535965 #535965 #b2bbcc  #535965   #535965
+client.focused_inactive  #31353f #31353f #b2bbcc  #31353f   #31353f
+client.unfocused         #535965 #31353f #b2bbcc  #31353f   #31353f
+client.urgent            #ff0000 #535965 #b2bbcc  #535965   #535965
+
+### Workspaces — same icons as i3
+set $ws1 "1 󰞷"
+set $ws2 "2 "
+set $ws3 "3 󰉋"
+set $ws4 "4 󰅨"
+set $ws5 "5 󰂽"
+set $ws6 "6 󰝚"
+set $ws7 "7 󰆦"
+set $ws8 "8 󰟀"
+set $ws9 "9 󰝰"
+set $ws10 "10 󰍡"
+
+# Workspace 1 default di HDMI (bisa tetap dipindah via move workspace to output)
+workspace $ws1 output HDMI-A-1
+
+### Monitors
+output DP-1     mode 1366x768@59.790Hz   pos 1920 0
+output HDMI-A-1 mode 1920x1080@120Hz     pos 0 0
+output HDMI-A-1 adaptive_sync on
+
+### Borders & gaps (i3: border pixel 2, top/bottom gap 27 for polybar)
+default_border pixel 2
+default_floating_border pixel 2
+
+# i3 parity
+focus_follows_mouse no
+default_orientation horizontal
+workspace_auto_back_and_forth yes
+floating_modifier $mod
+
+# bar 25px numpuk di dalam gap top/bottom (meniru override-redirect polybar)
+gaps top 27
+gaps bottom 27
+# gap antar window + tepi kiri/kanan (i3 lama: 0 — ini deviasi estetis)
+gaps inner 6
+gaps left 6
+gaps right 6
+for_window [urgent=latest] focus
+for_window [app_id="^.*"] border pixel 2
+
+### Autostart (wayland equivalents of i3 exec lines)
+exec systemctl --user import-environment && systemctl --user dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP 2>/dev/null || true
+exec waybar
+exec dunst
+exec lxpolkit
+exec swaybg -m fill -i "$HOME/Documents/dotfiles/wallpapers/3cj76ruxlmif1.jpeg"
+# i3: auto screen-off/lock disabled (xset lines commented). Re-enable if wanted:
+# exec swayidle -w timeout 600 'swaylock -f -c 1f2329' \
+#   timeout 1200 'swaymsg "output * dpms off"' \
+#   resume 'swaymsg "output * dpms on"' \
+#   before-sleep 'swaylock -f -c 1f2329'
+
+### Keybindings — same muscle memory
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+# reload the configuration file (feedback visual — reload sway memang senyap)
+bindsym $mod+Shift+c reload; exec notify-send -a sway -t 1500 "sway" "Config reloaded"
+
+# i3 pakai 'restart'; sway tidak punya — reload adalah padanannya
+bindsym $mod+Shift+r reload; exec notify-send -a sway -t 1500 "sway" "Config reloaded"
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Focus — YOUR layout (j/k/l/semicolon), NOT vim hjkl
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspace prev/next
+bindsym $mod+Ctrl+Right workspace next_on_output
+bindsym $mod+Ctrl+Left workspace prev_on_output
+
+# Move workspace ke monitor sebelah
+bindsym $mod+Ctrl+Shift+Left move workspace to output left
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+# Workspaces
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move to workspace + follow (same as i3)
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
+
+# Layout — same keys (note: h=v is YOUR layout, not vim)
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+q split toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+# Resize mode — same keys as i3
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym j resize shrink width 5 px
+    bindsym k resize grow height 5 px
+    bindsym l resize shrink height 5 px
+    bindsym semicolon resize grow width 5 px
+    bindsym Left resize shrink width 10 px
+    bindsym Down resize grow height 10 px
+    bindsym Up resize shrink height 10 px
+    bindsym Right resize grow width 10 px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Screenshots — flameshot GUI → slurp+grim+swappy (anotasi) → ~/Pictures
+bindsym Print exec ~/.config/sway/scripts/screenshot.sh
+bindsym Shift+Print exec ~/.config/sway/scripts/screenshot.sh
+bindsym $mod+Shift+s exec ~/.config/sway/scripts/screenshot.sh
+
+# Volume — same keys + same script as i3 (pactl+dunstify, works on pipewire)
+bindsym $mod+Page_Up exec --no-startup-id ~/.config/sway/scripts/volume-notif.sh volume_up
+bindsym $mod+Page_Down exec --no-startup-id ~/.config/sway/scripts/volume-notif.sh volume_down
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/sway/scripts/volume-notif.sh volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/sway/scripts/volume-notif.sh volume_down
+bindsym XF86AudioMute exec --no-startup-id ~/.config/sway/scripts/volume-notif.sh volume_mute
+
+# Wallpaper selector — same script feel, wayland engine
+bindsym $mod+Shift+w exec ~/.config/sway/scripts/wallpaper-selector.sh

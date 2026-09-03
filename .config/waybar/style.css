@@ -1,0 +1,45 @@
+* {
+  font-family: "FiraCode Nerd Font", sans-serif;
+  font-size: 12px;
+  min-height: 0;
+}
+
+/* OneDark — sama dengan polybar (xrdb: bg #1f2329, fg #b2bbcc,
+   primary/alert #e55561 = color1, secondary #535965 = color8,
+   border 2px secondary seperti border-size polybar) */
+window#waybar {
+  background: #1f2329;
+  color: #b2bbcc;
+  border: 2px solid #535965;
+}
+
+/* workspaces — seperti module/i3 polybar:
+   unfocused = secondary, focused = primary + underline, urgent = alert */
+#workspaces button {
+  padding: 0 4px;
+  color: #535965;
+  border-bottom: 2px solid transparent;
+}
+#workspaces button.focused,
+#workspaces button.active {
+  color: #e55561;
+  border-bottom: 2px solid #e55561;
+}
+#workspaces button.urgent {
+  color: #e55561;
+}
+
+/* module spacing (pengganti polybar module-margin + separator "|") */
+.modules-left > widget > label,
+.modules-right > widget > label {
+  margin: 0 7px;
+}
+
+/* prefix/ikon merah seperti format-prefix-foreground polybar */
+#custom-powermenu,
+#pulseaudio {
+  color: #e55561;
+}
+#pulseaudio.muted {
+  color: #b2bbcc;
+}

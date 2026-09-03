@@ -1,0 +1,74 @@
+/* wlogout — OneDark (match dotfiles: bg #1f2329, fg #b2bbcc,
+   primary/alert #e55561, secondary #535965) */
+
+* {
+	background-image: none;
+	font-family: "FiraCode Nerd Font", sans-serif;
+}
+
+window {
+	background-color: rgba(31, 35, 41, 0.92);
+}
+
+button {
+	border-radius: 14px;
+	border: 2px solid #535965;
+	margin: 10px;
+	background-color: rgba(49, 53, 63, 0.6);
+	color: #b2bbcc;
+	font-size: 14px;
+}
+
+button:focus, button:active, button:hover {
+	background-color: #535965;
+	color: #b2bbcc;
+	border-color: #e55561;
+}
+
+#lock {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#logout {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#suspend {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#hibernate {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#shutdown {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#reboot {
+	margin: 10px;
+	background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
